@@ -10,10 +10,12 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
@@ -24,7 +26,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "sn_profile")
-public class SnProfile implements BaseEntity<UUID>{
+public class SnProfile implements BaseEntity<UUID>, Serializable {
 
     @Id
     @Column("profile_id")
@@ -128,6 +130,10 @@ public class SnProfile implements BaseEntity<UUID>{
     @Column("profile_creation_date")
     private Instant createdOn;
 
+
+    @Column("is_delete")
+    private boolean isDelete;
+
     @Size(max = 400)
     @Column("remarks")
     private String remarks;
@@ -146,12 +152,22 @@ public class SnProfile implements BaseEntity<UUID>{
 
     @Override
     public void setIsDelete(Boolean isDelete) {
-        BaseEntity.super.setIsDelete(false);
+        this.isDelete=isDelete;
+    }
+
+    @Override
+    public Boolean getIsDelete() {
+        return isDelete;
     }
 
     @Override
     public void setCreatedOn(Instant createdOn) {
         this.createdOn = createdOn;
+    }
+
+    @Override
+    public void setUpdatedOn(Instant updatedOn) {
+
     }
 
 }
