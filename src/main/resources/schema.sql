@@ -1,7 +1,7 @@
 CREATE TABLE public.sn_profile (
       profile_id UUID NOT NULL,
-      "name" varchar(100) NOT NULL,
-      identifier varchar(100) NOT NULL,
+      "name" varchar(100) NOT NULL UNIQUE ,
+      identifier varchar(100) NOT NULL UNIQUE,
       product varchar(50),
       front_prep_data varchar(50),
       prep_data varchar(50),
@@ -24,7 +24,9 @@ CREATE TABLE public.sn_profile (
       minimum_value integer NOT NULL,
       maximum_value integer NOT NULL,
       profile_creation_date timestamptz NOT NULL,
+      is_delete boolean NOT NULL,
       remarks varchar(400) NOT NULL,
       profile_metadata json NULL,
       CONSTRAINT snprofile_pk PRIMARY KEY (profile_id)
 );
+

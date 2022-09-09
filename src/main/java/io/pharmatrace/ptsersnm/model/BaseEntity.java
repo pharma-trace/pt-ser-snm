@@ -28,8 +28,8 @@ public interface BaseEntity<PK> extends Persistable<PK> {
         return null;
     }
 
-
     void setCreatedOn(Instant createdOn);
 
+    void setUpdatedOn(Instant updatedOn);
 
 }

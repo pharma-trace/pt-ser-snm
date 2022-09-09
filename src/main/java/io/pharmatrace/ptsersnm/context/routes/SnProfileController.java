@@ -22,9 +22,14 @@ public class SnProfileController {
         return snProfileService.getAllProfiles();
     }
 
-    @PostMapping("saveProfile")
-    public Mono<SnProfile> saveProfile(@RequestBody SnProfile snProfile){
-        return snProfileService.saveProfile(snProfile);
+    @PostMapping("createProfile")
+    public Mono<SnProfile> saveProfile(@RequestBody Mono<SnProfile> snProfile){
+        return snProfileService.create(snProfile);
+    }
+
+    @PostMapping("updateProfile")
+    public Mono<SnProfile> updateProfile(@RequestBody Mono<SnProfile> snProfile){
+        return snProfileService.update(snProfile);
     }
 
     @GetMapping("getProfileByName/{name}")
@@ -48,7 +53,13 @@ public class SnProfileController {
     }
 
     @PostMapping("updateMetadata")
-    public Mono<SnProfile> test(@RequestBody SnProfile profile){
+    public Mono<SnProfile> updateMetaata(@RequestBody SnProfile profile){
         return snProfileService.updateMetadata(profile);
     }
+
+    @PostMapping("deleteProfile")
+    public Mono<SnProfile> deleteProfile(@RequestBody SnProfile profile){
+        return snProfileService.deleteProfile(profile);
+    }
+
 }
