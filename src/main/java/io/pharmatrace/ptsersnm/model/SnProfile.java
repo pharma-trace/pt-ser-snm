@@ -23,10 +23,10 @@ import java.util.UUID;
 @Data
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "sn_profile")
 public class SnProfile implements BaseEntity<UUID>, Serializable {
+
 
     @Id
     @Column("profile_id")
@@ -134,6 +134,10 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     @Column("is_delete")
     private boolean isDelete;
 
+    @Size(max=82)
+    @Column("serial_num_chars")
+    private String serialNumChars;
+
     @Size(max = 400)
     @Column("remarks")
     private String remarks;
@@ -168,6 +172,28 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     @Override
     public void setUpdatedOn(Instant updatedOn) {
 
+    }
+
+    public void init(){
+        this.serialNumChars = "";
+        if(this.format.equals("Numeric") || (this.numericValues)){
+            this.serialNumChars+="0123456789";
+            this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
+        }
+        if(this.format.equals("AlphaNumeric")){
+            if(this.lowerCaseAlphabet){
+                this.serialNumChars+="abcdefghijklmnopqrstuvwxyz";
+                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeLowerAlph+"]", "");
+            }
+            if(this.upperCaseAlphabet){
+                this.serialNumChars+="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeUpperAlph+"]", "");
+            }
+            if(this.specialCase){
+                this.serialNumChars+="!\"%&'()*+,-./;:<=>?-";
+                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeSpecialCase+"]", "");
+            }
+        }
     }
 
 }

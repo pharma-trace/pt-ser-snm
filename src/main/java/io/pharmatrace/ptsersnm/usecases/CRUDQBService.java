@@ -1,6 +1,7 @@
 package io.pharmatrace.ptsersnm.usecases;
 
 import io.pharmatrace.ptsersnm.model.BaseEntity;
+import io.pharmatrace.ptsersnm.model.SerialNumber;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,6 +19,8 @@ public interface CRUDQBService<T extends BaseEntity,PK> {
             return getRepository().save(entity);
         });
     }
+
+
 
     default Mono<T> read(PK id) {
         return getRepository().findById(id);
@@ -42,5 +45,6 @@ public interface CRUDQBService<T extends BaseEntity,PK> {
     }
 
     default Flux<T> browse() { return getRepository().findAll(); }
+
 
 }
