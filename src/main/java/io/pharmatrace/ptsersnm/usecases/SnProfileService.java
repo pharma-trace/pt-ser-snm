@@ -30,7 +30,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
         return snProfileRepository.findAllByIsDelete(false);
     }
 
-    //--------------------------
+
     @Override
     public Mono<SnProfile> create(Mono<SnProfile> businessObj) {
 
@@ -43,6 +43,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
                         if(identifierExist){
                             throw new ApiRequestException("Profile with identifier "+entity.getIdentifier()+" already exists!");
                         }
+                        entity.init();
                         return CRUDQBService.super.create(Mono.just(entity));
                     });
                 }
@@ -86,6 +87,16 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
         });
     }
 
+    public Mono<SnProfile> getProfileById(UUID id){
+        return snProfileRepository.existsById(id).flatMap(isExist->{
+            if(isExist){
+                return snProfileRepository.getSnProfileByIdAndIsDelete(id, false);
+            }else{
+                throw new ApiRequestException("No profile found with profile id "+id);
+            }
+        });
+    }
+
     public Mono<Boolean> existsByName(String name){
         return snProfileRepository.existsByName(name);
     }
@@ -110,11 +121,18 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
     }
 
     public Mono<SnProfile> deleteProfile(SnProfile profile) {
-        Mono<SnProfile> businessObj = snProfileRepository.getSnProfileById(profile.getId());
 
-        return businessObj.flatMap(entity -> {
-            entity.setIsDelete(true);
-            return snProfileRepository.save(entity);
+        return snProfileRepository.existsById(profile.getId()).flatMap(isExist->{
+            if(isExist){
+                Mono<SnProfile> businessObj = snProfileRepository.getSnProfileById(profile.getId());
+
+                return businessObj.flatMap(entity -> {
+                    entity.setIsDelete(true);
+                    return snProfileRepository.save(entity);
+                });
+            }else{
+                throw new ApiRequestException("No profile found with profile id "+profile.getId());
+            }
         });
     }
 

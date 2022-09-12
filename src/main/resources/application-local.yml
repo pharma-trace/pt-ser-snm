@@ -1,0 +1,15 @@
+spring:
+  r2dbc:
+    dialect: POSTGRES
+    url: r2dbc:postgresql://127.0.0.1:5432/pharmatrace?schema=public
+    username: postgres
+    password: 'pharmatrace'
+
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
+
+server:
+  port: 8080

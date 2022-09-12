@@ -25,8 +25,18 @@ CREATE TABLE public.sn_profile (
       maximum_value integer NOT NULL,
       profile_creation_date timestamptz NOT NULL,
       is_delete boolean NOT NULL,
+      serial_num_chars varchar(82) NOT NULL,
       remarks varchar(400) NOT NULL,
       profile_metadata json NULL,
       CONSTRAINT snprofile_pk PRIMARY KEY (profile_id)
 );
 
+CREATE TABLE public.serial_numbers (
+                                   id numeric NOT NULL,
+                                   serial_number varchar(30) NOT NULL UNIQUE ,
+                                   CONSTRAINT serial_nubmer_pk PRIMARY KEY (id)
+);
+
+
+delete from public.serial_numbers;
+commit;
