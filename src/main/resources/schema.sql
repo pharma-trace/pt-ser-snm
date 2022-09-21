@@ -1,3 +1,6 @@
+-- For compatibility with PostgreSQL
+CREATE DOMAIN IF NOT EXISTS TIMESTAMPTZ AS TIMESTAMP;
+
 CREATE TABLE public.sn_profile (
       profile_id UUID NOT NULL,
       "name" varchar(100) NOT NULL UNIQUE ,
@@ -36,7 +39,3 @@ CREATE TABLE public.serial_numbers (
                                    serial_number varchar(30) NOT NULL UNIQUE ,
                                    CONSTRAINT serial_nubmer_pk PRIMARY KEY (id)
 );
-
-
-delete from public.serial_numbers;
-commit;

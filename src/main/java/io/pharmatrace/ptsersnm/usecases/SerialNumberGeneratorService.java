@@ -89,6 +89,7 @@ public class SerialNumberGeneratorService {
     }
 
     public List<SerialNumber> generateNumbers2(
+            UUID profileId,
             final String alphaNumericString,
             final boolean useSecureRandom,
             final long M,
