@@ -15,6 +15,7 @@ import java.util.UUID;
 
 
 @RestController("/")
+@CrossOrigin(origins = "*")
 public class SnProfileController {
 
     @Autowired
