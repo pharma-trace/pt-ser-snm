@@ -33,7 +33,7 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     private UUID id;
 
     @NotBlank(message="is required field")
-    @Column("name")
+    @Column("profile_name")
     @Size(max = 100)
     private String name;
 

@@ -3,7 +3,7 @@ CREATE DOMAIN IF NOT EXISTS TIMESTAMPTZ AS TIMESTAMP;
 
 CREATE TABLE public.sn_profile (
       profile_id UUID NOT NULL,
-      "name" varchar(100) NOT NULL UNIQUE ,
+      profile_name varchar(100) NOT NULL UNIQUE ,
       identifier varchar(100) NOT NULL UNIQUE,
       product varchar(50),
       front_prep_data varchar(50),
@@ -37,5 +37,11 @@ CREATE TABLE public.sn_profile (
 CREATE TABLE public.serial_numbers (
                                    id numeric NOT NULL,
                                    serial_number varchar(30) NOT NULL UNIQUE ,
+                                   is_used boolean NOT NULL default false,
                                    CONSTRAINT serial_nubmer_pk PRIMARY KEY (id)
 );
+
+
+-- update serial_numbers set is_used=false;
+-- select count(*) from serial_numbers where is_used=true;
+-- commit;

@@ -1,6 +1,7 @@
 package io.pharmatrace.ptsersnm.usecases;
 
 import io.pharmatrace.ptsersnm.model.SerialNumber;
+import io.pharmatrace.ptsersnm.model.SnProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -18,6 +19,9 @@ public class SerialNumberGeneratorService {
 
     @Autowired
     private SerialNumberService serialNumberService;
+
+    @Autowired
+    SnProfileService snProfileService;
 
 
     public static final long BASE_PRIME = 1125899906842597L;
@@ -37,11 +41,16 @@ public class SerialNumberGeneratorService {
     }
 
     public List<SerialNumber> generateNumbers(
+            UUID profileId,
             final String alphaNumericString,
             final boolean useSecureRandom,
             final long M,
             final int N)
     {
+
+
+
+
         final long        startTime     = System.currentTimeMillis();
         final Set<String> serialNumbers = new HashSet<>();           // use Set instead of List as an easy protection
         List<SerialNumber> sList = new ArrayList<>();
@@ -84,17 +93,20 @@ public class SerialNumberGeneratorService {
                         M, useSecureRandom ? "using SecureRandom" : "using Math.random",
                         System.currentTimeMillis() - startTime));
 
-        return sList;
+        serialNumberService.saveAll(sList).subscribe();
+        return null;
 
     }
 
-    public List<SerialNumber> generateNumbers2(
+    public Flux<SerialNumber> generateNumbers2(
             UUID profileId,
-            final String alphaNumericString,
-            final boolean useSecureRandom,
-            final long M,
-            final int N)
+            final boolean useSecureRandom)
     {
+
+        SnProfile serialNumberProfile = snProfileService.getProfileById(profileId).share().block();
+        final String alphaNumericString = serialNumberProfile.getSerialNumChars();
+        final long M = (long)(serialNumberProfile.getMaxRequestSize()*1.2);
+        final int N = 20;
 
         Flux<SerialNumber> tempList = serialNumberService.findAll();
         Set<Long> hashes= new HashSet<>();
@@ -102,9 +114,6 @@ public class SerialNumberGeneratorService {
             hashes.add(entity.getId());
             return null;
         });
-
-
-
 
         final long        startTime     = System.currentTimeMillis();
         final Set<String> serialNumbers = new HashSet<>();           // use Set instead of List as an easy protection
@@ -153,7 +162,8 @@ public class SerialNumberGeneratorService {
                         M, useSecureRandom ? "using SecureRandom" : "using Math.random",
                         System.currentTimeMillis() - startTime));
 
-        return sList;
+
+        return serialNumberService.saveAll(sList);
 
     }
 

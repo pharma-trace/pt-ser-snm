@@ -18,5 +18,6 @@ public interface SerialNumberRepository extends R2dbcRepository<SerialNumber, Lo
     Mono<Boolean> existsById(Long aLong);
 
 
-   Flux<SerialNumber> findAll();
+    @Query("select * from serial_numbers where is_used=:isUsed limit :requestSize")
+   Flux<SerialNumber> findAllByIsUsed(boolean isUsed, long requestSize);
 }

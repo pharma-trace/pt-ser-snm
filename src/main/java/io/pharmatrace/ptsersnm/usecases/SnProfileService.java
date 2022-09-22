@@ -26,6 +26,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
     @Autowired
     SnProfileRepository snProfileRepository;
 
+
     public Flux<SnProfile> getAllProfiles(){
         return snProfileRepository.findAllByIsDelete(false);
     }

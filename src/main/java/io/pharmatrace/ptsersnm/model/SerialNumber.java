@@ -14,8 +14,6 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @Table(name = "serial_numbers")
 public class SerialNumber implements BaseEntity<Long>, Serializable {
@@ -29,6 +27,10 @@ public class SerialNumber implements BaseEntity<Long>, Serializable {
     @Column("serial_number")
     @Size(max = 30)
     private String serialNumber;
+
+    @NotBlank(message="is required field")
+    @Column("is_used")
+    private boolean isUsed;
 
     public SerialNumber(){
 

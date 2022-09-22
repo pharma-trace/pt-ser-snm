@@ -53,5 +53,8 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
         return serialNumberRepository.findAll();
     }
 
+    public Flux<SerialNumber> getSerialNumbers(int requestSize){
+        return serialNumberRepository.findAllByIsUsed(false, requestSize);
+    }
 
 }

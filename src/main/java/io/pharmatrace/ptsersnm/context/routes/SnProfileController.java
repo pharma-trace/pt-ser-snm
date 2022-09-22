@@ -3,6 +3,7 @@ package io.pharmatrace.ptsersnm.context.routes;
 import io.pharmatrace.ptsersnm.exceptions.ApiRequestException;
 import io.pharmatrace.ptsersnm.model.SnProfile;
 import io.pharmatrace.ptsersnm.usecases.SerialNumberGeneratorService;
+import io.pharmatrace.ptsersnm.usecases.SerialNumberService;
 import io.pharmatrace.ptsersnm.usecases.SnProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,9 @@ public class SnProfileController {
     SnProfileService snProfileService;
 
     @Autowired
+    SerialNumberService serialNumberService;
+
+    @Autowired
     SerialNumberGeneratorService serialNumberGeneratorService;
 
     @GetMapping("getAllProfiles")
@@ -29,7 +33,7 @@ public class SnProfileController {
 
     @PostMapping("createProfile")
     public Mono<SnProfile> saveProfile(@RequestBody Mono<SnProfile> snProfile){
-        return snProfileService.create(snProfile);
+       return snProfileService.create(snProfile);
     }
 
     @PostMapping("updateProfile")
