@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "69353fe0-2436-49e0-aa81-6a9812cf645b",
+		"name": "pharmatrace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22998218"
+	},
+	"item": [
+		{
+			"name": "localhost:8009/getAllProfiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8009/getAllProfiles",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"getAllProfiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/createProfile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"myProfile4\",\n    \"identifier\": \"speicalCaseAlphaNumeric\",\n    \"product\": \"product name here\",\n    \"frontPrepandData\": \"abc\",\n    \"prepandData\": \"def\",\n    \"appendData\": \"abdder\",\n    \"maxRequestSize\": 1000,\n    \"padLength\": 5,\n    \"padCharacter\": \"A\",\n    \"format\": \"AlphaNumeric\",\n    \"lowerCaseAlphabet\": true,\n    \"excludeLowerAlph\": \"afc\",\n    \"upperCaseAlphabet\": true,\n    \"excludeUpperAlph\": \"GHZ\",\n    \"numericValues\": true,\n    \"excludeNumericValues\": \"246\",\n    \"specialCase\": true,\n    \"excludeSpecialCase\": \"/!\",\n    \"active\": true,\n\n    \"remainingNumbers\": 20,\n\n   \"excludeNumberCount\": 10,\n\n    \"minimumValue\": 10,\n\n    \"maximumValue\": 50,\n\n    \"remarks\" : \"some remarks ere\",\n\n    \"profileMetadata\": {\n        \"key1\" : \"value1\",\n        \"key2\": \"value2\",\n        \"key3\": \"value3\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8009/createProfile",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"createProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/isProfileNameAvailable/profile1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8009/isProfileNameTaken/myProfile5",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"isProfileNameTaken",
+						"myProfile5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/isProfileIdentifierAvailable/ewiowrnf24ee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8009/isProfileIdentifierTaken/ewiowrn94hf84",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"isProfileIdentifierTaken",
+						"ewiowrn94hf84"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/updateMetadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"391f823e-6d4a-4d51-9835-95167d94c070\",\n        \n        \"profileMetadata\": {\n            \"key1\": \"value1\",\n            \"key2\": \"value2\",\n            \"key3\": \"value3\",\n             \"key4\": \"value4\",\n            \"key5\": \"value5\",\n            \"key6\": \"value6\"\n        }\n        \n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8009/updateMetadata",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"updateMetadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/getProfileByName/profile1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8009/getProfileByName/myProfile4",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"getProfileByName",
+						"myProfile4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/getProfileByIdentifier/profile1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8009/getProfileByIdentifier/ewiowrn94hf84",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"getProfileByIdentifier",
+						"ewiowrn94hf84"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/updateProfile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"312253a0-c463-4ac2-931a-d059b03d5c23\",\n        \"name\": \"myProfile1\",\n        \"identifier\": \"numericKeyOnly\",\n        \"product\": \"updated profile 2\",\n        \"frontPrepandData\": \"rbc\",\n        \"prepandData\": \"def\",\n        \"appendData\": \"abdder\",\n        \"maxRequestSize\": 10,\n        \"padLength\": 5,\n        \"padCharacter\": \"A\",\n        \"format\": \"numeric\",\n        \"lowerCaseAlphabet\": true,\n        \"excludeLowerAlph\": \"abc\",\n        \"upperCaseAlphabet\": true,\n        \"excludeUpperAlph\": \"ZZZ\",\n        \"numericValues\": true,\n        \"excludeNumericValues\": \"2345\",\n        \"specialCase\": true,\n        \"excludeSpecialCase\": \"/!\",\n        \"active\": true,\n        \"remainingNumbers\": 20,\n        \"excludeNumberCount\": 10,\n        \"minimumValue\": 10,\n        \"maximumValue\": 50,\n        \"createdOn\": \"2022-09-09T12:34:41.452508Z\",\n        \"isDelete\": false,\n        \"remarks\": \"some remarks ere\",\n        \"profileMetadata\": {\n            \"key1\": \"value1\",\n            \"key2\": \"value2\",\n            \"key3\": \"value3\",\n            \"key4\": \"value4\",\n            \"key5\": \"value5\"\n        },\n        \"new\": false\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8009/updateProfile",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"updateProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8009/deleteProfile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"aa1b2b68-11f5-4a3b-a2f5-a03e85ebea82\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8009/deleteProfile",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"deleteProfile"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

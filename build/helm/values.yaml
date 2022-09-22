@@ -1,0 +1,21 @@
+name: pt-ser-snm
+port: 8080
+address:
+  enabled: true
+  url: "ser-snm"
+image:
+  repository: 035764999992.dkr.ecr.eu-central-1.amazonaws.com/pt-ser-snm
+  tag: 
+  pullPolicy: IfNotPresent
+namespace: ser-snm
+deployment:
+  replicas: 1
+resources:
+  limits:
+    cpu: 150m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+serviceAccount:
+  name: pt-ser-snm
