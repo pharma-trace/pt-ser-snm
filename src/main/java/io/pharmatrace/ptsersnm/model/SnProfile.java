@@ -27,7 +27,6 @@ import java.util.UUID;
 @Table(name = "sn_profile")
 public class SnProfile implements BaseEntity<UUID>, Serializable {
 
-
     @Id
     @Column("profile_id")
     private UUID id;
@@ -130,7 +129,6 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     @Column("profile_creation_date")
     private Instant createdOn;
 
-
     @Column("is_delete")
     private boolean isDelete;
 
@@ -143,11 +141,17 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     private String remarks;
 
     @Column("profile_metadata")
-    @JsonSerialize(using = CustomSerializer.class)
-    @JsonDeserialize(using = CustomDeserializer.class)
-    private Json profileMetadata;
+//    @JsonSerialize(using = CustomSerializer.class)
+//    @JsonDeserialize(using = CustomDeserializer.class)
+    private String profileMetadata;
 
+    @Size(max = 40)
+    @Column("serial_number_index")
+    private Long serialNumberIndex;
 
+    @Size(max = 40)
+    @Column("serial_number_used_index")
+    private Long serialNumberUsedIndex;
 
     @Override
     public UUID generatePK() {
@@ -175,6 +179,8 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     }
 
     public void init(){
+        this.serialNumberIndex=0l;
+        this.serialNumberUsedIndex=0l;
         this.serialNumChars = "";
         if(this.format.equals("Numeric") || (this.numericValues)){
             this.serialNumChars+="0123456789";

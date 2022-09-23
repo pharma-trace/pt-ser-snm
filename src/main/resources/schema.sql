@@ -30,18 +30,20 @@ CREATE TABLE public.sn_profile (
       is_delete boolean NOT NULL,
       serial_num_chars varchar(82) NOT NULL,
       remarks varchar(400) NOT NULL,
-      profile_metadata json NULL,
+      profile_metadata varchar(1000) NULL,
+      serial_number_index integer NOT NULL,
+      serial_number_used_index integer NOT NULL,
       CONSTRAINT snprofile_pk PRIMARY KEY (profile_id)
 );
 
+
+
 CREATE TABLE public.serial_numbers (
-                                   id numeric NOT NULL,
+                                   sn_id UUID NOT NULL ,
+                                   sn_index numeric,
                                    serial_number varchar(30) NOT NULL UNIQUE ,
-                                   is_used boolean NOT NULL default false,
-                                   CONSTRAINT serial_nubmer_pk PRIMARY KEY (id)
+                                   status varchar(20) NOT NULL default 'AVAILABLE',
+                                   profile_id UUID,
+                                   CONSTRAINT number_profile_fk FOREIGN KEY (profile_id) REFERENCES sn_profile(profile_id),
+                                   CONSTRAINT serial_nubmer_pk PRIMARY KEY (profile_id,serial_number)
 );
-
-
--- update serial_numbers set is_used=false;
--- select count(*) from serial_numbers where is_used=true;
--- commit;

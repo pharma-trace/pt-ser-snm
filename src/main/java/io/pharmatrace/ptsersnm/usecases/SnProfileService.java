@@ -7,6 +7,7 @@ import io.pharmatrace.ptsersnm.exceptions.ApiExceptionHandler;
 import io.pharmatrace.ptsersnm.exceptions.ApiRequestException;
 import io.pharmatrace.ptsersnm.model.SnProfile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
     @Autowired
     SnProfileRepository snProfileRepository;
 
+    @Lazy
+    @Autowired
+    SerialNumberService serialNumberService;
 
     public Flux<SnProfile> getAllProfiles(){
         return snProfileRepository.findAllByIsDelete(false);
@@ -45,7 +49,10 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
                             throw new ApiRequestException("Profile with identifier "+entity.getIdentifier()+" already exists!");
                         }
                         entity.init();
-                        return CRUDQBService.super.create(Mono.just(entity));
+                        Mono<SnProfile> x = CRUDQBService.super.create(Mono.just(entity)).doOnNext(profile->{
+//                            serialNumberService.generateNumbers(profile.getId(), true);
+                        });
+                        return x;
                     });
                 }
             });

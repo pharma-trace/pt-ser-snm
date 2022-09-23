@@ -1,17 +1,12 @@
 package io.pharmatrace.ptsersnm.context.routes;
 
-import io.pharmatrace.ptsersnm.exceptions.ApiRequestException;
 import io.pharmatrace.ptsersnm.model.SnProfile;
-import io.pharmatrace.ptsersnm.usecases.SerialNumberGeneratorService;
 import io.pharmatrace.ptsersnm.usecases.SerialNumberService;
 import io.pharmatrace.ptsersnm.usecases.SnProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-import java.util.UUID;
 
 
 @RestController("/")
@@ -24,8 +19,6 @@ public class SnProfileController {
     @Autowired
     SerialNumberService serialNumberService;
 
-    @Autowired
-    SerialNumberGeneratorService serialNumberGeneratorService;
 
     @GetMapping("getAllProfiles")
     public Flux<SnProfile> getAllProfiles(){

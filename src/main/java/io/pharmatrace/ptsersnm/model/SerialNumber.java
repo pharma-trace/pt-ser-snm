@@ -12,33 +12,38 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @Table(name = "serial_numbers")
-public class SerialNumber implements BaseEntity<Long>, Serializable {
+public class SerialNumber implements BaseEntity<UUID>, Serializable {
 
     @Id
-    @Column("id")
-    private Long id;
+    @Column("sn_id")
+    private UUID id;
 
+    @Column("sn_index")
+    private Long snIndex;
 
-    @NotBlank(message="is required field")
     @Column("serial_number")
     @Size(max = 30)
     private String serialNumber;
 
+    @Column("profile_id")
+    private UUID profileId;
+
     @NotBlank(message="is required field")
-    @Column("is_used")
-    private boolean isUsed;
+    @Column("status")
+    private String status;
 
     public SerialNumber(){
 
     }
 
     @Override
-    public Long generatePK() {
-        return hash(this.serialNumber);
+    public UUID generatePK() {
+        return UUID.randomUUID();
     }
 
 
@@ -52,16 +57,4 @@ public class SerialNumber implements BaseEntity<Long>, Serializable {
 
     }
 
-    public static long hash(final String string)
-    {
-        long BASE_PRIME = 1125899906842597L;
-        long      h   = BASE_PRIME;
-        final int len = string.length();
-
-        for(int i = 0; i < len; i++)
-        {
-            h = 31 * h + string.charAt(i);
-        }
-        return h;
-    }
 }
