@@ -31,7 +31,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"myProfile4\",\n    \"identifier\": \"speicalCaseAlphaNumeric\",\n    \"product\": \"product name here\",\n    \"frontPrepandData\": \"abc\",\n    \"prepandData\": \"def\",\n    \"appendData\": \"abdder\",\n    \"maxRequestSize\": 1000,\n    \"padLength\": 5,\n    \"padCharacter\": \"A\",\n    \"format\": \"AlphaNumeric\",\n    \"lowerCaseAlphabet\": true,\n    \"excludeLowerAlph\": \"afc\",\n    \"upperCaseAlphabet\": true,\n    \"excludeUpperAlph\": \"GHZ\",\n    \"numericValues\": true,\n    \"excludeNumericValues\": \"246\",\n    \"specialCase\": true,\n    \"excludeSpecialCase\": \"/!\",\n    \"active\": true,\n\n    \"remainingNumbers\": 20,\n\n   \"excludeNumberCount\": 10,\n\n    \"minimumValue\": 10,\n\n    \"maximumValue\": 50,\n\n    \"remarks\" : \"some remarks ere\",\n\n    \"profileMetadata\": {\n        \"key1\" : \"value1\",\n        \"key2\": \"value2\",\n        \"key3\": \"value3\"\n    }\n}",
+					"raw": "{\n    \"name\": \"testProfile1\",\n    \"identifier\": \"speicalCaseAlphaNumeric1\",\n    \"product\": \"product name here\",\n    \"frontPrepandData\": \"abc123\",\n    \"prepandData\": \"def123\",\n    \"appendData\": \"84848399ABC\",\n    \"maxRequestSize\": 1000,\n    \"padLength\": 5,\n    \"padCharacter\": \"A\",\n    \"format\": \"AlphaNumeric\",\n    \"lowerCaseAlphabet\": true,\n    \"excludeLowerAlph\": \"afc\",\n    \"upperCaseAlphabet\": true,\n    \"excludeUpperAlph\": \"GHZ\",\n    \"numericValues\": true,\n    \"excludeNumericValues\": \"246\",\n    \"specialCase\": true,\n    \"excludeSpecialCase\": \"/!\",\n    \"active\": true,\n\n    \"remainingNumbers\": 20,\n\n   \"excludeNumberCount\": 10,\n\n    \"minimumValue\": 10,\n\n    \"maximumValue\": 50,\n\n    \"remarks\" : \"some remarks ere\",\n\n    \"profileMetadata\": {\n        \"key1\" : \"value1\",\n        \"key2\": \"value2\",\n        \"key3\": \"value3\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -39,11 +39,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8009/createProfile",
+					"raw": "localhost:8080/createProfile",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"createProfile"
 					]
@@ -57,14 +57,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8009/isProfileNameTaken/myProfile5",
+					"raw": "localhost:8080/isProfileNameTaken/testProfile1",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"isProfileNameTaken",
-						"myProfile5"
+						"testProfile1"
 					]
 				}
 			},
@@ -76,14 +76,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8009/isProfileIdentifierTaken/ewiowrn94hf84",
+					"raw": "localhost:8080/isProfileIdentifierTaken/speicalCaseAlphaNumeric",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"isProfileIdentifierTaken",
-						"ewiowrn94hf84"
+						"speicalCaseAlphaNumeric"
 					]
 				}
 			},
@@ -96,7 +96,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n        \"id\": \"391f823e-6d4a-4d51-9835-95167d94c070\",\n        \n        \"profileMetadata\": {\n            \"key1\": \"value1\",\n            \"key2\": \"value2\",\n            \"key3\": \"value3\",\n             \"key4\": \"value4\",\n            \"key5\": \"value5\",\n            \"key6\": \"value6\"\n        }\n        \n    }",
+					"raw": "{\n        \"id\": \"fedbbdee-a95b-402d-a629-40c0d41b7da1\",\n        \n        \"profileMetadata\": {\n            \"key1\": \"value1\",\n            \"key2\": \"value2\",\n            \"key3\": \"value3\",\n             \"key4\": \"value4\",\n            \"key5\": \"value5\",\n            \"key6\": \"value6\"\n        }\n        \n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -104,11 +104,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8009/updateMetadata",
+					"raw": "localhost:8080/updateMetadata",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"updateMetadata"
 					]
@@ -122,14 +122,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8009/getProfileByName/myProfile4",
+					"raw": "localhost:8080/getProfileByName/testProfile1",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"getProfileByName",
-						"myProfile4"
+						"testProfile1"
 					]
 				}
 			},
@@ -141,14 +141,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8009/getProfileByIdentifier/ewiowrn94hf84",
+					"raw": "localhost:8080/getProfileByIdentifier/speicalCaseAlphaNumeric",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"getProfileByIdentifier",
-						"ewiowrn94hf84"
+						"speicalCaseAlphaNumeric"
 					]
 				}
 			},
@@ -161,7 +161,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n        \"id\": \"312253a0-c463-4ac2-931a-d059b03d5c23\",\n        \"name\": \"myProfile1\",\n        \"identifier\": \"numericKeyOnly\",\n        \"product\": \"updated profile 2\",\n        \"frontPrepandData\": \"rbc\",\n        \"prepandData\": \"def\",\n        \"appendData\": \"abdder\",\n        \"maxRequestSize\": 10,\n        \"padLength\": 5,\n        \"padCharacter\": \"A\",\n        \"format\": \"numeric\",\n        \"lowerCaseAlphabet\": true,\n        \"excludeLowerAlph\": \"abc\",\n        \"upperCaseAlphabet\": true,\n        \"excludeUpperAlph\": \"ZZZ\",\n        \"numericValues\": true,\n        \"excludeNumericValues\": \"2345\",\n        \"specialCase\": true,\n        \"excludeSpecialCase\": \"/!\",\n        \"active\": true,\n        \"remainingNumbers\": 20,\n        \"excludeNumberCount\": 10,\n        \"minimumValue\": 10,\n        \"maximumValue\": 50,\n        \"createdOn\": \"2022-09-09T12:34:41.452508Z\",\n        \"isDelete\": false,\n        \"remarks\": \"some remarks ere\",\n        \"profileMetadata\": {\n            \"key1\": \"value1\",\n            \"key2\": \"value2\",\n            \"key3\": \"value3\",\n            \"key4\": \"value4\",\n            \"key5\": \"value5\"\n        },\n        \"new\": false\n    }",
+					"raw": "{\n        \"id\": \"312253a0-c463-4ac2-931a-d059b03d5423\",\n        \"name\": \"myProfile1\",\n        \"identifier\": \"numericKeyOnly\",\n        \"product\": \"updated profile 2\",\n        \"frontPrepandData\": \"rbc\",\n        \"prepandData\": \"def\",\n        \"appendData\": \"abdder\",\n        \"maxRequestSize\": 10,\n        \"padLength\": 5,\n        \"padCharacter\": \"A\",\n        \"format\": \"numeric\",\n        \"lowerCaseAlphabet\": true,\n        \"excludeLowerAlph\": \"abc\",\n        \"upperCaseAlphabet\": true,\n        \"excludeUpperAlph\": \"ZZZ\",\n        \"numericValues\": true,\n        \"excludeNumericValues\": \"2345\",\n        \"specialCase\": true,\n        \"excludeSpecialCase\": \"/!\",\n        \"active\": true,\n        \"remainingNumbers\": 20,\n        \"excludeNumberCount\": 10,\n        \"minimumValue\": 10,\n        \"maximumValue\": 50,\n        \"createdOn\": \"2022-09-09T12:34:41.452508Z\",\n        \"isDelete\": false,\n        \"remarks\": \"some remarks ere\",\n        \"profileMetadata\": {\n            \"key1\": \"value1\",\n            \"key2\": \"value2\",\n            \"key3\": \"value3\",\n            \"key4\": \"value4\",\n            \"key5\": \"value5\"\n        },\n        \"new\": false\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -169,11 +169,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8009/updateProfile",
+					"raw": "localhost:8080/updateProfile",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"updateProfile"
 					]
@@ -196,13 +196,33 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8009/deleteProfile",
+					"raw": "localhost:8080/deleteProfile",
 					"host": [
 						"localhost"
 					],
-					"port": "8009",
+					"port": "8080",
 					"path": [
 						"deleteProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSerialNumbers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/generateSerialNumber/49245199-2c3d-4f3e-9eb0-a06bd1d196a4/1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"generateSerialNumber",
+						"49245199-2c3d-4f3e-9eb0-a06bd1d196a4",
+						"1000"
 					]
 				}
 			},

@@ -102,8 +102,8 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     private boolean specialCase;
 
     @Size(max = 20)
-    @Column("exclude_special_case")
-    private String excludeSpecialCase;
+    @Column("include_special_case")
+    private String includeSpecialCase;
 
     @Size(max = 1)
     @Column("active")
@@ -182,7 +182,7 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
         this.serialNumberIndex=0l;
         this.serialNumberUsedIndex=0l;
         this.serialNumChars = "";
-        if(this.format.equals("Numeric") || (this.numericValues)){
+        if(this.format.equals("numeric") || (this.numericValues)){
             this.serialNumChars+="0123456789";
             this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
         }
@@ -196,8 +196,8 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
                 this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeUpperAlph+"]", "");
             }
             if(this.specialCase){
-                this.serialNumChars+="!\"%&'()*+,-./;:<=>?-";
-                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeSpecialCase+"]", "");
+                this.serialNumChars+=includeSpecialCase;
+//
             }
         }
     }
