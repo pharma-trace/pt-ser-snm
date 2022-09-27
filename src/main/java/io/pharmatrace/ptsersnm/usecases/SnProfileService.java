@@ -49,10 +49,10 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
                             throw new ApiRequestException("Profile with identifier "+entity.getIdentifier()+" already exists!");
                         }
                         entity.init();
-                        Mono<SnProfile> x = CRUDQBService.super.create(Mono.just(entity)).doOnNext(profile->{
+                        Mono<SnProfile> snProfileMono = CRUDQBService.super.create(Mono.just(entity)).doOnNext(profile->{
 //                            serialNumberService.generateNumbers(profile.getId(), true);
                         });
-                        return x;
+                        return snProfileMono;
                     });
                 }
             });
@@ -63,7 +63,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
     public Mono<SnProfile> update(Mono<SnProfile> businessObj) {
 
         return businessObj.flatMap(entity -> {
-            return snProfileRepository.existsById(entity.getId()).flatMap(idExist->{
+            return snProfileRepository.existsByIdAndAndIsDelete(entity.getId(),false).flatMap(idExist->{
                 if(!idExist){
                     throw new ApiRequestException("Profile with name "+entity.getName()+" did not found!");
                 }
@@ -96,7 +96,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
     }
 
     public Mono<SnProfile> getProfileById(UUID id){
-        return snProfileRepository.existsById(id).flatMap(isExist->{
+        return snProfileRepository.existsByIdAndAndIsDelete(id,false).flatMap(isExist->{
             if(isExist){
                 return snProfileRepository.getSnProfileByIdAndIsDelete(id, false);
             }else{
@@ -115,7 +115,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
 
     public Mono<SnProfile> updateMetadata(SnProfile profile) throws RuntimeException{
 
-        return snProfileRepository.existsById(profile.getId()).flatMap(isExist->{
+        return snProfileRepository.existsByIdAndAndIsDelete(profile.getId(), false).flatMap(isExist->{
             if(isExist){
                 Mono<SnProfile> businessObj = snProfileRepository.getSnProfileById(profile.getId());
                 return  businessObj.flatMap(entity -> {
@@ -130,12 +130,13 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
 
     public Mono<SnProfile> deleteProfile(SnProfile profile) {
 
-        return snProfileRepository.existsById(profile.getId()).flatMap(isExist->{
+        return snProfileRepository.existsByIdAndAndIsDelete(profile.getId(),false).flatMap(isExist->{
             if(isExist){
                 Mono<SnProfile> businessObj = snProfileRepository.getSnProfileById(profile.getId());
 
                 return businessObj.flatMap(entity -> {
                     entity.setIsDelete(true);
+                    serialNumberService.disableOnDelete(entity.getId());
                     return snProfileRepository.save(entity);
                 });
             }else{
@@ -148,5 +149,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
     public R2dbcRepository<SnProfile, UUID> getRepository() {
         return snProfileRepository;
     }
+
+
 
 }

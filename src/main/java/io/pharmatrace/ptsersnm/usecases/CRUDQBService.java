@@ -21,7 +21,6 @@ public interface CRUDQBService<T extends BaseEntity,PK> {
     }
 
 
-
     default Mono<T> read(PK id) {
         return getRepository().findById(id);
     }

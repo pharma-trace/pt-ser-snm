@@ -23,13 +23,14 @@ public interface SerialNumberRepository extends R2dbcRepository<SerialNumber, Lo
     @Override
     Mono<Boolean> existsById(Long aLong);
 
-
     @Query("select * from serial_numbers where profile_id=:profileId AND status=:status order by sn_index limit :requestSize")
    Flux<SerialNumber> findAllByStatus(UUID profileId, String status, long requestSize);
 
-
     @Query("update serial_numbers set status=:status where profile_id=:profileId AND  sn_index between :startIndex and :endIndex")
     Flux<SerialNumber> udateStatus(UUID profileId, long startIndex, long endIndex, String status);
+
+    @Query("update serial_numbers set status='DISABLED' where profile_id=:profileId status='AVAILABLE'")
+    void disableOnDelete(UUID profileId);
 
     @Query("select count(*) from serial_numbers where profile_id=:profileId AND status='AVAILABLE'")
     Mono<Integer> countSerials(UUID profileId);

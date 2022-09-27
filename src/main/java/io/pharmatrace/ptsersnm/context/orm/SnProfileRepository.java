@@ -26,6 +26,6 @@ public interface SnProfileRepository extends R2dbcRepository<SnProfile, UUID> {
 
     public Mono<Boolean> existsByIdentifier(String identifier);
 
-    Mono<Boolean> existsById(UUID uuid);
+    Mono<Boolean> existsByIdAndAndIsDelete(UUID uuid, Boolean isDelete);
 
 }

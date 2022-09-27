@@ -83,12 +83,13 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
         SnProfile snProfile= snProfileService.getProfileById(profileId).share().block();
 
         int availableSerialNumbers = serialNumberRepository.countSerials(profileId).share().block();
+
         if(snProfile.getMaxRequestSize()<requestSize){
             throw new ApiRequestException("Requested size of serial numbers exceeds the maximum allowed size ("+snProfile.getMaxRequestSize()+").");
         }else if (availableSerialNumbers<requestSize){
-            generateNumbers(profileId, true).doOnComplete(()->{
+            generateNumbers(profileId, true).subscribe(System.out::println);
+
             throw new ApiRequestException("Sorry, the server is bussy. Please try again later.");
-            });
         }
 
 
@@ -148,6 +149,10 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
 
         return this.saveAll(Flux.fromIterable(sList));
 
+    }
+
+    public void disableOnDelete(UUID profileId){
+        serialNumberRepository.disableOnDelete(profileId);
     }
 
 
