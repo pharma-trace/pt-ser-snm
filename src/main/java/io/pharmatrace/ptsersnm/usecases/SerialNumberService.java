@@ -151,9 +151,12 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
 
     }
 
-    public void disableOnDelete(UUID profileId){
-        serialNumberRepository.disableOnDelete(profileId);
+    public Flux<SerialNumber> disableOnDelete(UUID profileId){
+        return serialNumberRepository.disableOnDelete(profileId);
     }
 
+    public Flux<SerialNumber> disableOnMultipleDelete(Iterable<UUID> profileId){
+        return serialNumberRepository.disableOnMultipleDelete(profileId);
+    }
 
 }

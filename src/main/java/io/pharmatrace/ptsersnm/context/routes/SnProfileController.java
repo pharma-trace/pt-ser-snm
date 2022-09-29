@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 
 @RestController("/")
 @CrossOrigin(origins = "*")
@@ -65,6 +67,12 @@ public class SnProfileController {
     @PostMapping("deleteProfile")
     public Mono<SnProfile> deleteProfile(@RequestBody SnProfile profile){
         return snProfileService.deleteProfile(profile);
+    }
+
+    @PostMapping("deleteMultipleProfiles")
+    public Mono<Void> deleteMultipleProfiles(@RequestBody Iterable<UUID> profileIds){
+
+        return snProfileService.deleteMulipleProfiles(profileIds);
     }
 
 

@@ -3,8 +3,8 @@ CREATE DOMAIN IF NOT EXISTS TIMESTAMPTZ AS TIMESTAMP;
 
 CREATE TABLE public.sn_profile (
       profile_id UUID NOT NULL,
-      profile_name varchar(100) NOT NULL UNIQUE ,
-      identifier varchar(100) NOT NULL UNIQUE,
+      profile_name varchar(100) NOT NULL,
+      identifier varchar(100) NOT NULL,
       product varchar(50),
       front_prep_data varchar(50),
       prep_data varchar(50),
@@ -22,7 +22,7 @@ CREATE TABLE public.sn_profile (
       special_case boolean,
       include_special_case varchar(20),
       active boolean NOT NULL,
-      remaining_numbers integer NOT NULL,
+      remaining_numbers integer NOT NULL,   
       exclude_number_count integer NOT NULL,
       minimum_value integer NOT NULL,
       maximum_value integer NOT NULL,
@@ -36,7 +36,8 @@ CREATE TABLE public.sn_profile (
       CONSTRAINT snprofile_pk PRIMARY KEY (profile_id)
 );
 
-
+CREATE UNIQUE INDEX "profile_name_unique_soft" ON sn_profile(profile_name) WHERE sn_profile.is_delete IS FALSE;
+CREATE UNIQUE INDEX "profile_identifier_unique_soft" ON sn_profile(identifier) WHERE sn_profile.is_delete IS FALSE;
 
 CREATE TABLE public.serial_numbers (
                                    sn_id UUID NOT NULL ,

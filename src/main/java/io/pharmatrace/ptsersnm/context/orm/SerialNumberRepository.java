@@ -29,9 +29,14 @@ public interface SerialNumberRepository extends R2dbcRepository<SerialNumber, Lo
     @Query("update serial_numbers set status=:status where profile_id=:profileId AND  sn_index between :startIndex and :endIndex")
     Flux<SerialNumber> udateStatus(UUID profileId, long startIndex, long endIndex, String status);
 
-    @Query("update serial_numbers set status='DISABLED' where profile_id=:profileId status='AVAILABLE'")
-    void disableOnDelete(UUID profileId);
+    @Query("update serial_numbers set status='DISABLED' where profile_id=:profileId AND status='AVAILABLE'")
+    Flux<SerialNumber> disableOnDelete(UUID profileId);
+
+    @Query("update serial_numbers set status='DISABLED' where profile_id in (:profileIds) AND status='AVAILABLE'")
+    Flux<SerialNumber> disableOnMultipleDelete(Iterable<? extends UUID> profileIds);
 
     @Query("select count(*) from serial_numbers where profile_id=:profileId AND status='AVAILABLE'")
     Mono<Integer> countSerials(UUID profileId);
+
+//    DELETE FROM sn_profile WHERE sn_profile.profile_id IN ($1, $2, $3)
 }
