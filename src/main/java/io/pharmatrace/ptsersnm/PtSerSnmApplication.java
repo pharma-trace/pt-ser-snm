@@ -10,6 +10,7 @@ public class PtSerSnmApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PtSerSnmApplication.class, args);
+
     }
 
 }

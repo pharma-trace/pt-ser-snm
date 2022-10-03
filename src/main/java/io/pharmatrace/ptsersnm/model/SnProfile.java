@@ -16,7 +16,9 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -119,11 +121,11 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
 
     @Size(max = 20)
     @Column("minimum_value")
-    private Integer minimumValue;
+    private String minimumValue;
 
     @Size(max = 20)
     @Column("maximum_value")
-    private Integer maximumValue;
+    private String maximumValue;
 
     @Size(max = 15)
     @Column("profile_creation_date")
@@ -139,6 +141,10 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
     @Size(max = 400)
     @Column("remarks")
     private String remarks;
+
+    @Size(max = 7)
+    @Column("serial_num_length")
+    private Integer serialNumberLength;
 
     @Column("profile_metadata")
 //    @JsonSerialize(using = CustomSerializer.class)
@@ -182,24 +188,60 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
         this.serialNumberIndex=0l;
         this.serialNumberUsedIndex=0l;
         this.serialNumChars = "";
-        if(this.format.equals("numeric") || (this.numericValues)){
-            this.serialNumChars+="0123456789";
-            this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
-        }
+        Integer excludeCount =0;
+        char smallest='_', largest='_';
+
         if(this.format.equals("AlphaNumeric")){
+            if(this.numericValues){
+                this.serialNumChars="0123456789"+this.serialNumChars;
+                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
+                excludeCount+=this.excludeNumericValues.length();
+                smallest= this.serialNumChars.charAt(0);
+                largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
+            }
             if(this.lowerCaseAlphabet){
                 this.serialNumChars+="abcdefghijklmnopqrstuvwxyz";
                 this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeLowerAlph+"]", "");
+                excludeCount+=excludeLowerAlph.length();
+                if(smallest=='_')
+                    smallest= this.serialNumChars.charAt(0);
+                largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
+
             }
             if(this.upperCaseAlphabet){
                 this.serialNumChars+="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeUpperAlph+"]", "");
+                excludeCount+=excludeUpperAlph.length();
+                if(smallest=='_')
+                    smallest= this.serialNumChars.charAt(0);
+                largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
             }
             if(this.specialCase){
                 this.serialNumChars+=includeSpecialCase;
-//
+                excludeCount+="!\"%&'()*+,-./:;<=?".replaceAll("["+this.includeSpecialCase+"]", "").length();
             }
+
+        }else{
+            this.serialNumChars+="0123456789";
+            this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
+            excludeCount+=this.excludeNumericValues.length();
+            smallest= this.serialNumChars.charAt(0);
+            largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
         }
+
+        if(this.maxRequestSize.equals(null) || maxRequestSize<1000){
+            this.maxRequestSize=1000;
+        }
+
+        this.remainingNumbers = (int)Math.pow(this.serialNumChars.length(), this.serialNumberLength);
+        this.excludeNumberCount = (int)Math.pow((this.serialNumChars.length()+excludeCount), this.serialNumberLength)-this.remainingNumbers;
+
+
+        this.minimumValue = String.valueOf(smallest).repeat(serialNumberLength);
+        this.maximumValue = String.valueOf(largest).repeat(serialNumberLength);
+
+
+
     }
 
 }
