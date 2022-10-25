@@ -1,8 +1,8 @@
 -- For compatibility with PostgreSQL
 CREATE DOMAIN IF NOT EXISTS TIMESTAMPTZ AS TIMESTAMP;
 
--- drop table if exists serial_numbers;
--- drop table if exists sn_profile;
+drop table if exists serial_numbers;
+drop table if exists sn_profile;
 
 
 CREATE TABLE public.sn_profile (
