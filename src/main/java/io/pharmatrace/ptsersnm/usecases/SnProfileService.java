@@ -57,7 +57,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
                                 @Override
                                 public void run() {
                                     serialNumberService.generateNumbers(x.getId(), x.getMaxRequestSize(), true)
-                                    .subscribe(System.out::println);
+                                    .subscribe();
                                 }
                             });
                             thread.start();
@@ -150,7 +150,7 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
 
                 return businessObj.flatMap(entity -> {
                     entity.setIsDelete(true);
-                    serialNumberService.disableOnDelete(entity.getId()).subscribe(System.out::println);
+                    serialNumberService.disableOnDelete(entity.getId()).subscribe();
                     return snProfileRepository.save(entity);
                 });
             }else{
@@ -161,15 +161,12 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
 
     public Mono<Void> deleteMulipleProfiles(Iterable<UUID> profilesIds) {
 
-//        profiles.doOnNext(profile->{
-//            deleteProfile(profile).subscribe(System.out::println);
-//            return;
-//        }).subscribe(System.out::println);
+
         return snProfileRepository.deleteAllById(profilesIds).doOnSuccess(x->{
-            System.out.println("\n \n \n --------------DELETED---------- \n \n \n "+x);
-            serialNumberService.disableOnMultipleDelete(profilesIds).subscribe(System.out::println);
+
+            serialNumberService.disableOnMultipleDelete(profilesIds).subscribe();
         });
-//        return Mono.just("All profiles deleted successfully!");
+
     }
 
 

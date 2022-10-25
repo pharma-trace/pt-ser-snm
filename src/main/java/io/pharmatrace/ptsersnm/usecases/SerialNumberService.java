@@ -92,7 +92,7 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
                 @Override
                 public void run() {
                     int numbersRequired = snProfile.getMaxRequestSize()-availableSerialNumbers;
-                    generateNumbers(profileId, numbersRequired, true).subscribe(System.out::println);
+                    generateNumbers(profileId, numbersRequired, true).subscribe();
                 }
             });
             thread.start();
@@ -103,12 +103,12 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
 
         long usedIndex = snProfile.getSerialNumberUsedIndex();
         Flux<SerialNumber> serialNumberFlux = serialNumberRepository.findAllByStatus(profileId, "AVAILABLE", requestSize).doOnComplete(()->{
-            serialNumberRepository.udateStatus(profileId, usedIndex, usedIndex+requestSize,"USED").subscribe(System.out::println);
+            serialNumberRepository.udateStatus(profileId, usedIndex, usedIndex+requestSize,"USED").subscribe();
         });
 
         snProfile.setSerialNumberUsedIndex(usedIndex+requestSize);
-        snProfileService.update(Mono.just(snProfile)).subscribe(System.out::println);
-        generateNumbers(profileId, requestSize,true).subscribe(System.out::println);
+        snProfileService.update(Mono.just(snProfile)).subscribe();
+        generateNumbers(profileId, requestSize,true).subscribe();
         return serialNumberFlux;
     }
 
@@ -155,7 +155,7 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
             serialNumbers.add(sb.toString());
         }
         serialNumberProfile.setSerialNumberIndex(serialNumbereindex);
-        snProfileService.update(Mono.just(serialNumberProfile)).subscribe(System.out::println);
+        snProfileService.update(Mono.just(serialNumberProfile)).subscribe();
 
         return this.saveAll(Flux.fromIterable(sList));
 

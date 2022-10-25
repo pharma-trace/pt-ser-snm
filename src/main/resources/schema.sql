@@ -1,8 +1,8 @@
 -- For compatibility with PostgreSQL
 CREATE DOMAIN IF NOT EXISTS TIMESTAMPTZ AS TIMESTAMP;
 
-drop table if exists serial_numbers;
-drop table if exists sn_profile;
+-- drop table if exists serial_numbers;
+-- drop table if exists sn_profile;
 
 
 CREATE TABLE public.sn_profile (
@@ -41,8 +41,8 @@ CREATE TABLE public.sn_profile (
       CONSTRAINT snprofile_pk PRIMARY KEY (profile_id)
 );
 
--- CREATE UNIQUE INDEX "profile_name_unique_soft" ON sn_profile(profile_name) WHERE sn_profile.is_delete IS FALSE;
--- CREATE UNIQUE INDEX "profile_identifier_unique_soft" ON sn_profile(identifier) WHERE sn_profile.is_delete IS FALSE;
+CREATE UNIQUE INDEX "profile_name_unique_soft" ON sn_profile(profile_name) WHERE sn_profile.is_delete IS FALSE;
+CREATE UNIQUE INDEX "profile_identifier_unique_soft" ON sn_profile(identifier) WHERE sn_profile.is_delete IS FALSE;
 
 CREATE TABLE public.serial_numbers (
                                    sn_id UUID NOT NULL ,
