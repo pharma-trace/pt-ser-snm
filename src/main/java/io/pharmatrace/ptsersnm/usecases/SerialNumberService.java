@@ -87,7 +87,15 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
         if(snProfile.getMaxRequestSize()<requestSize){
             throw new ApiRequestException("Requested size of serial numbers exceeds the maximum allowed size ("+snProfile.getMaxRequestSize()+").");
         }else if (availableSerialNumbers<requestSize){
-            generateNumbers(profileId, true).subscribe(System.out::println);
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int numbersRequired = snProfile.getMaxRequestSize()-availableSerialNumbers;
+                    generateNumbers(profileId, numbersRequired, true).subscribe(System.out::println);
+                }
+            });
+            thread.start();
 
             throw new ApiRequestException("Sorry, the server is bussy. Please try again later.");
         }
@@ -100,19 +108,21 @@ public class SerialNumberService implements CRUDQBService<SerialNumber, Long>{
 
         snProfile.setSerialNumberUsedIndex(usedIndex+requestSize);
         snProfileService.update(Mono.just(snProfile)).subscribe(System.out::println);
-        generateNumbers(profileId, true).subscribe(System.out::println);
+        generateNumbers(profileId, requestSize,true).subscribe(System.out::println);
         return serialNumberFlux;
     }
 
     public Flux<SerialNumber> generateNumbers(
             UUID profileId,
+            int M,
             final boolean useSecureRandom)
     {
 
         SnProfile serialNumberProfile = snProfileService.getProfileById(profileId).share().block();
         final String alphaNumericString = serialNumberProfile.getSerialNumChars();
-        final long M = (long)(serialNumberProfile.getMaxRequestSize()*1.2);
-        final int N = 20;
+        M*=1.2;
+//        final long M = (long)(serialNumberProfile.getMaxRequestSize()*1.2);
+        final int N = serialNumberProfile.getSerialNumberLength();
         long serialNumbereindex= serialNumberProfile.getSerialNumberIndex();
 
         final long        startTime     = System.currentTimeMillis();

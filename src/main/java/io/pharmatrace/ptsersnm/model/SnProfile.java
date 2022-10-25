@@ -113,11 +113,11 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
 
     @Size(max = 50)
     @Column("remaining_numbers")
-    private Integer remainingNumbers;
+    private Double remainingNumbers;
 
     @Size(max = 15)
     @Column("exclude_number_count")
-    private Integer excludeNumberCount;
+    private Double excludeNumberCount;
 
     @Size(max = 20)
     @Column("minimum_value")
@@ -194,15 +194,21 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
         if(this.format.equals("AlphaNumeric")){
             if(this.numericValues){
                 this.serialNumChars="0123456789"+this.serialNumChars;
-                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
-                excludeCount+=this.excludeNumericValues.length();
+                if(!(this.excludeNumericValues==null || this.excludeNumericValues.equals(""))){
+                    this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
+                    excludeCount+=this.excludeNumericValues.length();
+                }
+
                 smallest= this.serialNumChars.charAt(0);
                 largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
             }
             if(this.lowerCaseAlphabet){
                 this.serialNumChars+="abcdefghijklmnopqrstuvwxyz";
-                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeLowerAlph+"]", "");
-                excludeCount+=excludeLowerAlph.length();
+                if(!(this.excludeLowerAlph==null || this.excludeLowerAlph.equals(""))){
+                    this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeLowerAlph+"]", "");
+                    excludeCount+=excludeLowerAlph.length();
+                }
+
                 if(smallest=='_')
                     smallest= this.serialNumChars.charAt(0);
                 largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
@@ -210,36 +216,44 @@ public class SnProfile implements BaseEntity<UUID>, Serializable {
             }
             if(this.upperCaseAlphabet){
                 this.serialNumChars+="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeUpperAlph+"]", "");
-                excludeCount+=excludeUpperAlph.length();
+                if(!(this.excludeUpperAlph==null || this.excludeUpperAlph.equals(""))){
+                    this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeUpperAlph+"]", "");
+                    excludeCount+=excludeUpperAlph.length();
+                }
+
                 if(smallest=='_')
                     smallest= this.serialNumChars.charAt(0);
                 largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
             }
             if(this.specialCase){
                 this.serialNumChars+=includeSpecialCase;
-                excludeCount+="!\"%&'()*+,-./:;<=?".replaceAll("["+this.includeSpecialCase+"]", "").length();
+//                if(!(this.includeSpecialCase==null || this.includeSpecialCase.equals(""))){
+//                    excludeCount+="!\"%&'()*+,-./:;<=?".replaceAll("["+this.includeSpecialCase+"]", "").length();
+//                }
             }
 
         }else{
             this.serialNumChars+="0123456789";
-            this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
-            excludeCount+=this.excludeNumericValues.length();
+            if(!(this.excludeNumericValues ==null || this.excludeNumericValues.equals(""))){
+                this.serialNumChars = this.serialNumChars.replaceAll("["+this.excludeNumericValues+"]", "");
+                excludeCount+=this.excludeNumericValues.length();
+            }
             smallest= this.serialNumChars.charAt(0);
             largest = this.serialNumChars.charAt(this.serialNumChars.length()-1);
         }
 
-        if(this.maxRequestSize.equals(null) || maxRequestSize<1000){
+        if(this.maxRequestSize==null || maxRequestSize<1000){
             this.maxRequestSize=1000;
         }
 
-        this.remainingNumbers = (int)Math.pow(this.serialNumChars.length(), this.serialNumberLength);
-        this.excludeNumberCount = (int)Math.pow((this.serialNumChars.length()+excludeCount), this.serialNumberLength)-this.remainingNumbers;
-
+        double temp0 = this.serialNumChars.length();
+        this.remainingNumbers = (double)Math.pow(temp0, this.serialNumberLength);
+        double temp1 =temp0+excludeCount;
+        double temp2 = (double) Math.pow(temp1, this.serialNumberLength);
+        this.excludeNumberCount = temp2-this.remainingNumbers;
 
         this.minimumValue = String.valueOf(smallest).repeat(serialNumberLength);
         this.maximumValue = String.valueOf(largest).repeat(serialNumberLength);
-
 
 
     }

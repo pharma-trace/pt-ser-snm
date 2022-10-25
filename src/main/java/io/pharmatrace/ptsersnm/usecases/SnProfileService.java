@@ -52,8 +52,16 @@ public class SnProfileService implements CRUDQBService<SnProfile, UUID>  {
                         }
                         entity.init();
                         Mono<SnProfile> snProfileMono = CRUDQBService.super.create(Mono.just(entity)).flatMap(x->{
-//                            serialNumberService.generateNumbers(x.getId(), true)
-//                                    .subscribe(System.out::println);
+
+                            Thread thread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    serialNumberService.generateNumbers(x.getId(), x.getMaxRequestSize(), true)
+                                    .subscribe(System.out::println);
+                                }
+                            });
+                            thread.start();
+//
                             return  Mono.just(x);
                         });
 
