@@ -41,8 +41,8 @@ CREATE TABLE public.sn_profile (
       CONSTRAINT snprofile_pk PRIMARY KEY (profile_id)
 );
 
-CREATE UNIQUE INDEX "profile_name_unique_soft" ON sn_profile(profile_name) WHERE sn_profile.is_delete IS FALSE;
-CREATE UNIQUE INDEX "profile_identifier_unique_soft" ON sn_profile(identifier) WHERE sn_profile.is_delete IS FALSE;
+-- CREATE UNIQUE INDEX "profile_name_unique_soft" ON sn_profile(profile_name) WHERE sn_profile.is_delete IS FALSE;
+-- CREATE UNIQUE INDEX "profile_identifier_unique_soft" ON sn_profile(identifier) WHERE sn_profile.is_delete IS FALSE;
 
 CREATE TABLE public.serial_numbers (
                                    sn_id UUID NOT NULL ,
