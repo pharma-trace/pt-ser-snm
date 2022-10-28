@@ -1,5 +1,6 @@
 package io.pharmatrace.ptsersnm.context.routes;
 
+import io.pharmatrace.ptsersnm.context.common.Constants;
 import io.pharmatrace.ptsersnm.model.SnProfile;
 import io.pharmatrace.ptsersnm.usecases.SerialNumberService;
 import io.pharmatrace.ptsersnm.usecases.SnProfileService;
@@ -74,6 +75,12 @@ public class SnProfileController {
 
         return snProfileService.deleteMulipleProfiles(profileIds);
     }
+
+    @GetMapping("/getShipmentDetails")
+    public Mono<String> getShipmentDetails(){
+        return Mono.just(Constants.SHIPMENT_DETAILS);
+    }
+
 
 
 }
